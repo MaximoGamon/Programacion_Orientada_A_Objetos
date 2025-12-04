@@ -133,6 +133,9 @@ class View:
         txt_plazas=Entry(ventana,textvariable=plazas)
         txt_plazas.pack(pady=10)
 
+        btn_guardar=Button(ventana,text=" Guardar ",width=10,command=lambda:controlador1.funciones.insertar_resultados_auto(marca.get(),color.get(),modelo.get(),velocidad.get(),potencia.get(),plazas.get()))
+        btn_guardar.pack(pady=10)
+
         btn_salir=Button(ventana,text=" Regresar",width=10,command=lambda:View.menu_acciones(ventana,"Autos"))
         btn_salir.pack(pady=10)
 
@@ -228,7 +231,7 @@ class View:
             plazas.set(registro[4])
             txt_plazas.pack(pady=5)
 
-            Button(ventana,text="Guardar",command="").pack(pady=5)
+            Button(ventana,text="Guardar",command=lambda:controlador1.funciones.cambiar_auto(marca.get(),color.get(),modelo.get(),velocidad.get(),potencia.get(),plazas.get(),id.get())).pack(pady=5)
             Button(ventana,text=" Regresar",width=10,command=lambda:View.menu_acciones(ventana,"Autos")).pack(pady=5)
 
 
@@ -252,7 +255,7 @@ class View:
             txt_id.focus()
             txt_id.pack(pady=5)
 
-            btn_eliminar=Button(ventana,text="Eliminar",command="")
+            btn_eliminar=Button(ventana,text="Eliminar",command=lambda:controlador1.funciones.eliminar_auto(id.get()))
             btn_eliminar.pack(pady=5)
             Button(ventana,text=" Regresar",width=10,command=lambda:View.menu_acciones(ventana,"Autos")).pack(pady=5)
 
