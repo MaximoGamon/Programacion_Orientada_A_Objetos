@@ -92,7 +92,7 @@ class Camionetas:
     def eliminar(id):
         try:
             cursor.execute(
-                "delete from camionetas where id=%s",(id,))
+                "delete from camionetas where id_Camionetas=%s",(id,))
             conexion.commit()
             return True
         except:
