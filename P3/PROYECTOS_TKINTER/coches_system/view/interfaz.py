@@ -488,53 +488,53 @@ class View:
         lbl_marca=Label(scrollbar,text="Marca:",justify=CENTER)
         lbl_marca.pack(pady=10)
         marca=StringVar()
-        txt_marca=Entry(scrollbar,textvariable=marca,justify=RIGHT)
+        txt_marca=Entry(scrollbar,textvariable=marca)
         txt_marca.focus()
         txt_marca.pack(pady=5)
 
         lbl_color=Label(scrollbar,text="Color:",justify=CENTER)
         lbl_color.pack(pady=10)
         color=StringVar()
-        txt_color=Entry(scrollbar,textvariable=color,justify=RIGHT)
+        txt_color=Entry(scrollbar,textvariable=color)
         txt_color.pack(pady=5)
 
         lbl_modelo=Label(scrollbar,text="Modelo:",justify=CENTER)
         lbl_modelo.pack(pady=10)
         modelo=StringVar()
-        txt_modelo=Entry(scrollbar,textvariable=modelo,justify=RIGHT)
+        txt_modelo=Entry(scrollbar,textvariable=modelo)
         txt_modelo.pack(pady=5)
 
         lbl_velocidad=Label(scrollbar,text="Velocidad:",justify=CENTER)
         lbl_velocidad.pack(pady=10)
         velocidad=StringVar()
-        txt_velocidad=Entry(scrollbar,textvariable=velocidad,justify=RIGHT)
+        txt_velocidad=Entry(scrollbar,textvariable=velocidad)
         txt_velocidad.pack(pady=5)
 
         lbl_caballaje=Label(scrollbar,text="Caballaje:",justify=CENTER)
         lbl_caballaje.pack(pady=10)
-        caballaje=StringVar()
-        txt_caballaje=Entry(scrollbar,textvariable=caballaje,justify=RIGHT)
+        caballaje=IntVar()
+        txt_caballaje=Entry(scrollbar,textvariable=caballaje)
         txt_caballaje.pack(pady=5)
 
         lbl_plazas=Label(scrollbar,text="Plazas:",justify=CENTER)
         lbl_plazas.pack(pady=10)
         plazas=StringVar()
-        txt_plazas=Entry(scrollbar,textvariable=plazas,justify=RIGHT)
+        txt_plazas=Entry(scrollbar,textvariable=plazas)
         txt_plazas.pack(pady=5)
 
         lbl_ejes=Label(scrollbar,text="Ejes:",justify=CENTER)
         lbl_ejes.pack(pady=10)
         ejes=StringVar()
-        txt_ejes=Entry(scrollbar,textvariable=ejes,justify=RIGHT)
+        txt_ejes=Entry(scrollbar,textvariable=ejes)
         txt_ejes.pack(pady=5)
 
         lbl_capacidad=Label(scrollbar,text="Capacidad de Carga:",justify=CENTER)
         lbl_capacidad.pack(pady=10)
         capacidad=StringVar()
-        txt_capacidad=Entry(scrollbar,textvariable=capacidad,justify=RIGHT)
+        txt_capacidad=Entry(scrollbar,textvariable=capacidad)
         txt_capacidad.pack(pady=5)
         
-        btn_guardar=Button(scrollbar,text="Guardar",command=lambda:"",justify=CENTER)
+        btn_guardar=Button(scrollbar,text="Guardar",command=lambda:controlador1.funciones.insertar_camiones(marca.get(),color.get(),modelo.get(),velocidad.get(),caballaje.get(),plazas.get(),ejes.get(),capacidad.get()),justify=CENTER)
         btn_guardar.pack(pady=5)
         btn_volver=Button(scrollbar,text="Volver",command=lambda:View.menu_acciones(ventana,"Camiones"),justify=CENTER)
         btn_volver.pack(pady=5)
@@ -543,10 +543,7 @@ class View:
     def consultar_camiones(ventana):
         View.borrar_pantalla(ventana)
         Label(ventana,text=".:: Consulta de Camiones ::.\n",justify=CENTER).pack(pady=10)
-        registros=[
-            ["1","1","1","1","1","1","1","1","1"],
-            ["2","2","2","2","2","2","2","2","2"]
-        ]
+        registros=controlador1.funciones.consultar_camiones()
         if len(registros)>0:
             columnas=("ID","Marca","Color","Modelo","Velocidad","Potencia","Plazas","Ejes","Capacidad de Carga")
             tree_frame = ctk.CTkFrame(ventana, fg_color="transparent")
@@ -601,10 +598,7 @@ class View:
 
     @staticmethod
     def cambiar_camiones(ventana,id_):
-        registro=[
-            ["1","1","1","1","1","1","1","1","1"],
-            ["2","2","2","2","2","2","2","2","2"]
-        ]
+        registro=controlador1.funciones.consultar_id_camiones(id_)
         if registro is None:
             messagebox.showinfo(icon="info",message="No existen est camion en la BD ...")
         else:
@@ -618,68 +612,65 @@ class View:
 
             id=IntVar()
             txt_id=Entry(scrollbar,textvariable=id,justify=RIGHT,width=5,state="readonly")
-            id.set(registro[1][0])
+            id.set(id_)
             txt_id.focus()
             txt_id.pack(pady=5)
 
             Label(scrollbar,text="Marca: ").pack(pady=5)
             marca=StringVar()
-            txt_marca=Entry(scrollbar,textvariable=marca,justify=RIGHT)
-            marca.set("Pendiente")
+            txt_marca=Entry(scrollbar,textvariable=marca)
+            marca.set(registro[2])
             txt_marca.pack(pady=5)
 
             Label(scrollbar,text="Color: ").pack(pady=5)
             color=StringVar()
-            lbl_color=Entry(scrollbar,textvariable=color,justify=RIGHT)
-            color.set("Pendiente")
+            lbl_color=Entry(scrollbar,textvariable=color)
+            color.set(registro[1])
             lbl_color.pack(pady=5)
             
             Label(scrollbar,text="Modelo: ").pack(pady=5)
             modelo=StringVar()
-            lbl_modelo=Entry(scrollbar,textvariable=modelo,justify=RIGHT)
-            modelo.set("Pendiente")
+            lbl_modelo=Entry(scrollbar,textvariable=modelo)
+            modelo.set(registro[3])
             lbl_modelo.pack(pady=5)
 
             Label(scrollbar,text="Velocidad: ").pack(pady=5)
             velocidad=StringVar()
-            lbl_velocidad=Entry(scrollbar,textvariable=velocidad,justify=RIGHT)
-            velocidad.set("Pendiente")
+            lbl_velocidad=Entry(scrollbar,textvariable=velocidad)
+            velocidad.set(registro[4])
             lbl_velocidad.pack(pady=5)
 
             Label(scrollbar,text="Potencia: ").pack(pady=5)
             potencia=StringVar()
-            lbl_potencia=Entry(scrollbar,textvariable=potencia,justify=RIGHT)
-            potencia.set("Pendiente")
+            lbl_potencia=Entry(scrollbar,textvariable=potencia)
+            potencia.set(registro[5])
             lbl_potencia.pack(pady=5)
 
             Label(scrollbar,text="Plazas: ").pack(pady=5)
             plazas=StringVar()
-            lbl_plazas=Entry(scrollbar,textvariable=plazas,justify=RIGHT)
-            plazas.set("Pendiente")
+            lbl_plazas=Entry(scrollbar,textvariable=plazas)
+            plazas.set(registro[6])
             lbl_plazas.pack(pady=5)
 
             Label(scrollbar,text="Ejes: ").pack(pady=5)
-            traccion=StringVar()
-            lbl_traccion=Entry(scrollbar,textvariable=traccion,justify=RIGHT)
-            traccion.set("Pendiente")
-            lbl_traccion.pack(pady=5)
+            ejes=StringVar()
+            lbl_ejes=Entry(scrollbar,textvariable=ejes)
+            ejes.set(registro[7])
+            lbl_ejes.pack(pady=5)
 
             Label(scrollbar,text="Capcidad de carga: ").pack(pady=5)
-            cerrada=StringVar()
-            lbl_cerrada=Entry(scrollbar,textvariable=cerrada,justify=RIGHT)
-            cerrada.set("Pendiente")
-            lbl_cerrada.pack(pady=5)
+            capacidad=StringVar()
+            lbl_capacidad=Entry(scrollbar,textvariable=capacidad)
+            capacidad.set(registro[8])
+            lbl_capacidad.pack(pady=5)
                 
-            Button(scrollbar,text="Guardar",command=lambda:"").pack(pady=5)
+            Button(scrollbar,text="Guardar",command=lambda:controlador1.funciones.cambiar_camiones(marca.get(),color.get(),modelo.get(),velocidad.get(),potencia.get(),plazas.get(),ejes.get(),capacidad.get(),id.get())).pack(pady=5)
             Button(scrollbar,text="Volver",command=lambda:View.menu_acciones(ventana,"Camiones")).pack(pady=5)
 
     #Vista de eliminar pantalla
     @staticmethod
     def eliminar_camiones(ventana,id_):
-        registro=[
-            ["1","1","1","1","1","1","1"],
-            ["2","2","2","2","2","2","2"]
-        ]
+        registro=controlador1.funciones.consultar_id_camiones(id_)
         if registro is None:
             messagebox.showinfo(icon="info",message="No existen este camion en la BD ...")
         else:
@@ -692,11 +683,11 @@ class View:
             
             id=IntVar()
             txt_id=Entry(ventana,textvariable=id,width=5,justify=RIGHT,state="readonly")
-            id.set(registro[1][0])
+            id.set(id_)
             txt_id.focus()
             txt_id.pack(pady=5)
 
-            btn_eliminar=Button(ventana,text="Eliminar",command=lambda:"")
+            btn_eliminar=Button(ventana,text="Eliminar",command=lambda:controlador1.funciones.eliminar_camiones(id.get()))
             btn_eliminar.pack(pady=5)
             btn_volver=Button(ventana,text="Volver",command=lambda:View.menu_acciones(ventana,"Camiones"))
             btn_volver.pack(pady=5)
