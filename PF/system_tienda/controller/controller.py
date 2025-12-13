@@ -43,6 +43,7 @@ class proveedores:
     @staticmethod
     def agregar(nom,tel,dir_):
         res=prm.proveedores.insertarProveedor(nom,tel,dir_)
+        return res
 
     @staticmethod
     def actualizar(nom,tel,dir_,id_prov):
@@ -85,4 +86,5 @@ class inventario:
     @staticmethod
     def consultar_agotado():
         agotado=im.inventario.consultarProd_ago()
+
         return agotado
